@@ -2,6 +2,7 @@
 
 import { useChat } from "@ai-sdk/react";
 import { useState, type FormEvent, type ChangeEvent } from "react";
+import { Paperclip, ArrowUpRight } from "lucide-react"; // Import icons
 
 interface Message {
   id: string;
@@ -39,7 +40,7 @@ const Chat = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-4 border rounded-lg shadow-lg bg-white">
+    <div className="px-6 pb-4 shadow-lg max-w-2xl mx-auto"> {/* Side padding */}
       <h1 className="text-2xl font-bold mb-4 text-center">TaxGPT</h1>
 
       {/* Chat Messages */}
@@ -72,24 +73,32 @@ const Chat = () => {
         ))}
       </div>
 
-      {/* File Upload */}
-      <input type="file" onChange={handleFileUpload} className="mb-2" />
-      {uploadedFile && <p className="text-sm text-gray-500">Uploaded: {uploadedFile.name}</p>}
+      {/* Chat Input with File Upload */}
+      <form onSubmit={handleMessageSubmit} className="flex items-center gap-2 border rounded p-2 bg-white">
+        {/* File Upload Icon */}
+        <label htmlFor="file-upload" className="cursor-pointer">
+          <Paperclip className="text-gray-500 hover:text-gray-700 transition" />
+        </label>
+        <input
+          type="file"
+          id="file-upload"
+          onChange={handleFileUpload}
+          className="hidden"
+        />
+        {uploadedFile && <p className="text-sm text-gray-500 truncate max-w-[150px]">{uploadedFile.name}</p>}
 
-      {/* Chat Input */}
-      <form onSubmit={handleMessageSubmit} className="flex gap-2">
+        {/* Chat Input */}
         <input
           type="text"
           value={messageText}
           onChange={handleTextChange}
-          placeholder="Ask a tax question..."
-          className="flex-1 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Ask me a tax question..."
+          className="flex-1 p-2 border-none focus:outline-none"
         />
-        <button
-          type="submit"
-          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
-        >
-          Send
+
+        {/* Send Button (Arrow) */}
+        <button type="submit" className="text-blue-600 hover:text-blue-800 transition">
+          <ArrowUpRight />
         </button>
       </form>
     </div>
