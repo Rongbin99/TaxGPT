@@ -40,15 +40,15 @@ const Chat = () => {
   };
 
   return (
-    <div className="px-6 pb-4 shadow-lg max-w-2xl mx-auto"> {/* Side padding */}
+    <div className="px-4 pb-2 mx-6"> {/* Reduced side padding */}
       <h1 className="text-2xl font-bold mb-4 text-center">TaxGPT</h1>
 
       {/* Chat Messages */}
-      <div className="h-96 overflow-y-auto mb-4 p-3 border rounded bg-gray-50">
+      <div className="h-[24rem] overflow-y-auto mb-4 p-3 border rounded bg-gray-50">
         {messages.map((message: Message) => (
           <div
             key={message.id}
-            className={`mb-3 p-2 rounded max-w-[80%] ${
+            className={`mb-3 p-2 rounded w-fit min-w-[20%] ${
               message.role === "user" ? "bg-blue-100 ml-auto" : "bg-gray-100 mr-auto"
             }`}
           >
@@ -65,7 +65,7 @@ const Chat = () => {
         {quickReplies.map((reply, index) => (
           <button
             key={index}
-            className="p-2 bg-gray-200 rounded-lg text-sm hover:bg-gray-300 transition"
+            className="p-2 bg-gray-200 rounded-lg text-sm focus-within:shadow-[0_0_10px_rgba(0,123,255,0.5)] transition-shadow"
             onClick={() => handleQuickReply(reply)}
           >
             {reply}
@@ -74,9 +74,15 @@ const Chat = () => {
       </div>
 
       {/* Chat Input with File Upload */}
-      <form onSubmit={handleMessageSubmit} className="flex items-center gap-2 border rounded p-2 bg-white">
-        {/* File Upload Icon */}
-        <label htmlFor="file-upload" className="cursor-pointer">
+      <form
+        onSubmit={handleMessageSubmit}
+        className="flex items-center gap-2 border rounded p-2 bg-white focus-within:shadow-[0_0_10px_rgba(0,123,255,0.5)] transition-shadow"
+      >
+        {/* File Upload Icon with Circular Background */}
+        <label
+          htmlFor="file-upload"
+          className="cursor-pointer flex items-center justify-center w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 transition"
+        >
           <Paperclip className="text-gray-500 hover:text-gray-700 transition" />
         </label>
         <input
@@ -93,12 +99,15 @@ const Chat = () => {
           value={messageText}
           onChange={handleTextChange}
           placeholder="Ask me a tax question..."
-          className="flex-1 p-2 border-none focus:outline-none"
+          className="flex-1 p-2 border-none focus:outline-none focus:ring-0"
         />
 
-        {/* Send Button (Arrow) */}
-        <button type="submit" className="text-blue-600 hover:text-blue-800 transition">
-          <ArrowUpRight />
+        {/* Send Button (Arrow) with Circular Background */}
+        <button
+          type="submit"
+          className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 hover:bg-blue-200 transition"
+        >
+          <ArrowUpRight className="text-blue-600 hover:text-blue-800 transition" />
         </button>
       </form>
     </div>
