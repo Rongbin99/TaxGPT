@@ -25,14 +25,14 @@ const Chat = () => {
     // Append user message to chat
     await append({ role: "user", content: messageText });
   
-    // Call the API with the user input as the prompt
+    // Call the API with the user input as part of the messages array
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ prompt: messageText }), // Send the user input as the prompt
+        body: JSON.stringify({ messages: [{ role: "user", content: messageText }] }), // Send the user input as part of messages
       });
   
       const data = await response.json();
