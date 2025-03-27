@@ -10,12 +10,6 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground: #fafafa !important;
-  }
-}
-
 /* Gradient animation */
 @keyframes gradientAnimation {
   0% { background-position: 0% 50%; }
@@ -31,11 +25,3 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Dark mode gradient */
-@media (prefers-color-scheme: dark) {
-  body {
-    background: linear-gradient(to right, #5A189A, #023E8A);
-    background-size: 200% 100%;
-    animation: gradientAnimation 4s infinite linear;
-  }
-}
