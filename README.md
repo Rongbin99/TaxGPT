@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TaxGPT
 
-## Getting Started
+## Setup and Run
 
-First, run the development server:
+To run this locally, first clone the repository:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+git clone https://github.com/Rongbin99/TaxGPT
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Navigate to the project root, and install the dependencies:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Insert your OpenAI API key into `.env` and run the Next.js project with:
 
-## Learn More
+```
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Access the project via localhost:3000
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Future Improvements
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The UI of the tax assistant as be extended to feature customizable themes by allowing customized stylesheets that the user could customize. Additionally, while minor, the latest chat messages should be kept within view at the bottom of the chatbox. Currently it goes out of view once the box is full however some simple scoll logic should handle that in the future, ensuring that the latest messages are within view. 
 
-## Deploy on Vercel
+Given more time, I would have liked to better polish up the background containers of each individual chat message. Make the Assistant messages a little more vivid and noticeable, and add a fluid glow affect to the quick response chat options. Additionally, the file analysis placeholder could be more visual, which a animation of a magnifying glass looking through a file perhaps. 
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The quick responses were also hardcoded, ideally they should be generated prompts from the AI, which is another thing that can be improved upon.
