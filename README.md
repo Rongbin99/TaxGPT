@@ -20,7 +20,7 @@ Insert your OpenAI API key into `.env` and run the Next.js project with:
 npm run dev
 ```
 
-Access the project via (localhost:3000)[localhost:3000]
+Access the project via [http://localhost:3000](http://localhost:3000)
 
 ## Future Improvements
 
