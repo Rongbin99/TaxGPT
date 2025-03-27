@@ -13,30 +13,75 @@ interface Message {
 const quickReplies = ["How do tax brackets work?", "Tell me about deductions"];
 
 const Chat = () => {
-  const { messages, input, handleInputChange, handleSubmit } = useChat();
+  const { messages, input, handleInputChange, handleSubmit, append } = useChat();
   const [messageText, setMessageText] = useState<string>("");
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
 
-  const handleMessageSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleMessageSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    handleSubmit(e);
-    setMessageText("");
+    
+    if (!messageText.trim()) return;
+  
+    // Append user message to chat
+    await append({ role: "user", content: messageText });
+  
+    // Call the API with the user input as the prompt
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ prompt: messageText }), // Send the user input as the prompt
+      });
+  
+      const data = await response.json();
+  
+      // Append the assistant's response to the chat
+      if (data && data.text) {
+        await append({ role: "assistant", content: data.text });
+      } else {
+        await append({ role: "assistant", content: "Sorry, something went wrong." });
+      }
+  
+    } catch (error) {
+      console.error("Error submitting message:", error);
+      await append({ role: "assistant", content: "There was an error processing your request." });
+    }
+  
+    // Simulate AI file analysis if a file is uploaded
+    if (uploadedFile) {
+      const fileName = uploadedFile.name;
+      await append({ role: "assistant", content: `Analyzing "${fileName}"... Please wait.` });
+  
+      // Simulate analysis result after a short delay
+      setTimeout(async () => {
+        await append({
+          role: "assistant",
+          content: `Analysis of "${fileName}" complete. Here's a brief summary: ...`,
+        });
+      }, 2000);
+    }
+  
+    setMessageText(""); // Clear the input field
   };
 
+  // Handle Text Change
   const handleTextChange = (e: ChangeEvent<HTMLInputElement>) => {
     handleInputChange(e);
     setMessageText(e.target.value);
   };
 
+  // Handle File Upload
   const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       setUploadedFile(event.target.files[0]);
     }
   };
 
-  const handleQuickReply = (reply: string) => {
-    handleInputChange({ target: { value: reply } } as ChangeEvent<HTMLInputElement>);
-    handleSubmit({ preventDefault: () => {} } as FormEvent<HTMLFormElement>);
+  // Handle Quick Reply
+  const handleQuickReply = async (reply: string) => {
+    await append({ role: "user", content: reply });
   };
 
   return (
